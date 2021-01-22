@@ -18,6 +18,7 @@ import type {
   JssStyle
 } from './types'
 import type {GenerateId} from './utils/createGenerateId'
+import type SheetsRegistry from './SheetsRegistry'
 
 let instanceCounter = 0
 
@@ -34,6 +35,8 @@ export default class Jss {
     Renderer: isInBrowser ? DomRenderer : null,
     plugins: []
   }
+
+  sheetsRegistry: SheetsRegistry = sheets
 
   generateId: GenerateId = createGenerateIdDefault({minify: false})
 
@@ -73,6 +76,10 @@ export default class Jss {
     // eslint-disable-next-line prefer-spread
     if (options.plugins) this.use.apply(this, options.plugins)
 
+    if (options.sheetsRegistry !== undefined) {
+      this.sheetsRegistry = options.sheetsRegistry
+    }
+
     return this
   }
 
@@ -82,7 +89,7 @@ export default class Jss {
   createStyleSheet(styles: Object, options: StyleSheetFactoryOptions = ({}: any)): StyleSheet {
     let {index} = options
     if (typeof index !== 'number') {
-      index = sheets.index === 0 ? 0 : sheets.index + 1
+      index = this.sheetsRegistry.index === 0 ? 0 : this.sheetsRegistry.index + 1
     }
     const sheet = new StyleSheet(styles, {
       ...options,
@@ -102,7 +109,7 @@ export default class Jss {
    */
   removeStyleSheet(sheet: StyleSheet): this {
     sheet.detach()
-    sheets.remove(sheet)
+    this.sheetsRegistry.remove(sheet)
     return this
   }
 

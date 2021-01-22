@@ -100,6 +100,8 @@ export {default as createGenerateId} from './utils/createGenerateId'
  */
 export const create = (options?: JssOptions): Jss => new Jss(options)
 
+export {default as DomRenderer} from './DomRenderer'
+
 /**
  * A global Jss instance.
  */

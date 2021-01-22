@@ -11,6 +11,7 @@ import type {CSSStyleRule, AnyCSSRule} from './cssom'
 import type {HTMLElementWithStyleMap} from './dom'
 import type RuleList from '../RuleList'
 import type {CreateGenerateId, CreateGenerateIdOptions, GenerateId} from '../utils/createGenerateId'
+import type SheetsRegistry from '../SheetsRegistry'
 
 export type {RuleList, StyleSheet}
 
@@ -165,7 +166,8 @@ export type JssOptions = {
   id?: CreateGenerateIdOptions,
   plugins?: Array<Plugin>,
   insertionPoint?: InsertionPoint,
-  Renderer?: Class<Renderer> | null
+  Renderer?: Class<Renderer> | null,
+  sheetsRegistry?: SheetsRegistry
 }
 
 export type InternalJssOptions = {|
